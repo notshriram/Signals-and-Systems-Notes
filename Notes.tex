@@ -13,6 +13,22 @@
 %packages list
 
 \usepackage{amsmath,amsfonts,graphicx}
+\usepackage{pgf,tikz}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows}
+\usepackage{pgfplots}
+\pgfplotsset{
+    standard/.style={%Axis format configuration
+        axis x line=middle,
+        axis y line=middle,
+        enlarge x limits=0.15,
+        enlarge y limits=0.15,
+        every axis x label/.style={at={(current axis.right of origin)},anchor=north west},
+        every axis y label/.style={at={(current axis.above origin)},anchor=north east},
+        every axis plot post/.style={mark options={fill=white}}
+        }
+    }
+%\pgfplotsset{chstyle/.style={xmin=-5,xmax=5,ymin=-2,ymax=2,xlabel=t,ylabel={$x(t)$},axis lines=center}}
 
 %
 % The following commands set up the lecnum (lecture number)
@@ -132,26 +148,127 @@ A signal which is defined continuously for all values of time $t$ is called a co
 
 {\bf These signals can be further classified as follows:}
 \subsection*{\Large{On the basis of periodicity}}
-\textbf{Periodic Signals :}\bigskip\\
+\textbf{Periodic Signals :}
 {\bf Continuous Time Periodic Signals }\\
 a signal is said to be CT-periodic if it repeats after a certain time interval $T_0$\\
 Mathematically, it is defined as the signal which satisfies :\\
-$x(t)=x(t+T_0)  \forall  t  \in R$ \bigskip\\
+\begin{align*}
+x(t)=x(t+T_0)  \forall  t  \in R
+\end{align*}
 {\bf Discrete Time Periodic Signals }\\
 a signal is said to be DT-periodic if it repeats after a certain time interval $N_0$\\
 Mathematically, it is defined as the signal which satisfies :\\
-$x[n]=x[n+N_0]  \forall  n  \in Z$\bigskip\\
+\begin{align*}
+x[n]=x[n+N_0]  \forall  n  \in Z
+\end{align*}
 {\bf Aperiodic Signals :}\\ A signal that does not satisfy the above conditions is called aperiodic signal. It may be viewed as a limiting case of a periodic signal in which period tends to Infinity.
 \subsection*{\Large{Even and Odd signals }}
-	a signal $x(t)$ is said to be even if it satisfies : \\
+	a signal $x(t)$ is said to be even if it satisfies :
 	\begin{align*}
 	x(t)=x(-t){\hspace{4mm}(CT)}\\
 	x[n]=x[-n]{\hspace{4mm}(DT)}
 	\end{align*}
-	a signal x(t) is said to be odd if it satisfies : \\
+	a signal x(t) is said to be odd if it satisfies :
 	\begin{align*}x(t)=-x(-t){\hspace{4mm}(CT)}\\x[n]=-x[-n]{\hspace{4mm}(DT)}\end{align*}	
-	if it satisfies neither it is said to be neither even nor odd.
+	if it satisfies neither it is said to be neither even nor odd.\\
+
+\subsection*{\Large{Deterministic and Random Signals }}
+A signal is said to be deterministic if there is no uncertainty with respect to its value at any instant of time. Or, signals which can be defined exactly by a mathematical formula are known as deterministic signals.\\
+
+A signal is said to be non-deterministic if there is uncertainty with respect to its value at some instant of time. Non-deterministic signals are random in nature hence they are called random signals. Random signals cannot be described by a mathematical equation. They are modelled in probabilistic terms.\\
+\subsection*{\Large{Energy and Power Signals }}
+A signal is said to be energy signal when it has finite energy.
+$$\text{Energy}\, E = \int_{-\infty}^{\infty} |x\,(t)|^2dt$$
+A signal is said to be power signal when it has finite power.
+$$\text{Power}\, P = \lim_{T \to \infty}\,{1\over2T}\,\int_{-T}^{T}\,|x(t)|^2dt$$
+NOTE:A signal cannot be both, energy and power simultaneously. Also, a signal may be neither energy nor power signal.
+
+\begingroup
+\centering
+
+Power of energy signal = 0\\
+Energy of power signal =$\infty$
+
+\endgroup
+\pagebreak
+\section{Standard Signals}
+There are some standard signals which are used repeatedly in signals and systems. Let us take a look on some of them.\vspace{4mm}\\
+{\bf Standard signals list:}
+\begin{enumerate}
+\item Unit step signal
+\item Unit Ramp signal
+\item Unit parabolic
+\item Signum
+\item Real And Complex Exponential Signals
+\item Sinusoidal Signals
+\item Rectangular Signals
+\item Triangular signal
+\item Sampling Function
+\item Sinc Function
+\item Gaussian Pulse
+\item Unit Impulse
+\end{enumerate}
+
+\subsection*{Unit step signal}
+for continuous time :\\
+	\[ x(t) = \left\{ \begin{array}{ll}
+
+	1 & \mbox{if $t > 0$;} \\
+
+	0 & \mbox{if $t < 0$;} \\
+
+	\end{array}
+	\right. \]
+at t=0 there is a discontinuity. but generally it can be said that the value converges to 0.5
+\begingroup
+\centering
+
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=0.5cm,y=0.5cm]
+\draw[->,color=black] (-5.86,0.) -- (5.5,0.);
+\foreach \x in {-5.,-4.,-3.,-2.,-1.,1.,2.,3.,4.,5.}
+\draw[shift={(\x,0)},color=black] (0pt,2pt) -- (0pt,-2pt) node[below] {\footnotesize $\x$};
+\draw[->,color=black] (0.,-4.22) -- (0.,4.54);
+\foreach \y in {-4.,-3.,-2.,-1.,1.,2.,3.,4.}
+\draw[shift={(0,\y)},color=black] (2pt,0pt) -- (-2pt,0pt) node[left] {\footnotesize $\y$};
+\draw[color=black] (0pt,-10pt) node[right] {\footnotesize $0$};
+\clip(-5.86,-4.22) rectangle (5.5,4.54);
+\draw[smooth,samples=100,domain=-5.86:5.5] plot(\x,{0.5*(\x)/abs(\x)+0.5});
+\begin{scriptsize}
+\draw[color=black] (-5.7,-0.16) node {$f$};
+\end{scriptsize}
+\end{tikzpicture}\\
+\endgroup
+\bigskip
+for discrete time :\\
+	\[ x[n] = \left\{ \begin{array}{ll}
+
+	1 & \mbox{if $n \geq 0$;} \\
+
+	0 & \mbox{if $n < 0$;} \\
+
+	\end{array}
+	\right. \]
+
 \section{Next topic}
+\begingroup
+\centering
+
+Sinc Function\smallskip\\
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=0.5cm,y=0.5cm]
+\draw[->,color=black] (-5.86,0.) -- (5.5,0.);
+\foreach \x in {-5.,-4.,-3.,-2.,-1.,1.,2.,3.,4.,5.}
+\draw[shift={(\x,0)},color=black] (0pt,2pt) -- (0pt,-2pt) node[below] {\footnotesize $\x$};
+\draw[->,color=black] (0.,-4.22) -- (0.,4.54);
+\foreach \y in {-4.,-3.,-2.,-1.,1.,2.,3.,4.}
+\draw[shift={(0,\y)},color=black] (2pt,0pt) -- (-2pt,0pt) node[left] {\footnotesize $\y$};
+\draw[color=black] (0pt,-10pt) node[right] {\footnotesize $0$};
+\clip(-5.86,-4.22) rectangle (5.5,4.54);
+\draw[smooth,samples=100,domain=-5.86:5.5] plot(\x,{sin((3.1415926535*(\x))*180/pi)/(3.1415926535*(\x))});
+\begin{scriptsize}
+\draw[color=black] (-5.7,-0.16) node {$f$};
+\end{scriptsize}
+\end{tikzpicture}\\
+\endgroup
 
 Here is how to define things in the proper mathematical style.
 Let $f_k$ be the $AND-OR$ function, defined by
