@@ -611,6 +611,177 @@ $$x[n_0] = \sum_{n = -\infty}^\infty \delta[n - n_0] x[n]$$
 \item and convolution in discrete time:\\
 $$x[n] \ast \delta[n-n_0] = x[n-n_0]  $$
 \end{itemize}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Operations on Signals}
+A variety of operations can be carried out on signals to obtain new signals. These operations can be classified into two categories - operations that are performed on the dependent variable and operations that can be performed on the independent variable. Recall that for a signal $x(t)$ , $t$is the independent variable and $x(t)$is the dependent variable.
+\subsection{Operations performed on the dependent variable:}
+{\bf Amplitude Scaling:\\}
+Signals are often amplified or attenuated, i.e., the amplitude of the signal is scaled. Mathematically, this corresponds to multiplying the signal $x(t)$ by a (real or complex constant) c to obtain a new signal, say $y(t)$ given by :
+\begin{align} \hbox{For CT signals}: & y(t) = c \ x(t) \nonumber \\ \hbox{For DT signals}: & y[n] = c \ x[n] \end{align}
+{\bf Addition, Subtraction, Multiplication, and Division\\}
+Take two signals 
+$x_1(t)$ and $x_2(t)$ 
+
+. We can add, subtract, multiply and divide these signals. These operations are performed for every value of $t$
+. This is similar to performing operations on functions of $t$
+. Thus we can obtain a new signal 
+$y(t)$
+from two signals 
+$x_1(t)$ and $x_2(t)$ 
+according to,
+\begin{align} \hbox{Addition:} & y(t)=x_1(t)+x_2(t) \\ \hbox{Subtraction:}& y(t)=x_1(t)-x_2(t) \\ \hbox{Multiplication:}&y(t)=x_1(t).x_2(t) \\ \hbox{Division:}&y(t)=x_1(t)/x_2(t) \end{align}
+{\bf Derivatives and Integrals of CT signals\\}
+For continuous-time signals (CT) signals, we define the derivative and integral of the signal as follows. It is important to note the notation used in defining the integral. Notice that the variable of integration is $\tau$ and $t$ appears in the limit of the integral making the result of the integral a function of $t$.
+\begin{align} \hbox{Derivative:} & y(t)=\frac{d}{dt}x(t) \\ \hbox{Integral:} & y(t)=\int_{-\infty}^{t}x(\tau)d\tau. \end{align}
+
+{\bf Difference and Partial sums of DT signals\\}
+For discrete-time signals, the operation of derivative and integrals are not well defined. The equivalent notion of derivative and integral for DT signals are given by backward difference and partial sum as given below:
+\begin{align} \hbox{Backward difference:} & y[n]=x[n]-x[n-1] \\ \hbox{Partial sum:} & y[n] = \sum_{m=-\infty}^{n} x[m]. \end{align}
+
+\subsection{Operations performed on the independent variable:}
+The various operations are:\\
+\begin{enumerate}
+\item Time Scaling:\\
+Given a signal $x(t)$ ,Time scaling is defined as-
+\begin{equation} y(t)=x(at) \end{equation}
+\item Time Reversal or Reflection:\\
+\begin{equation} y(t)=x(-t) \end{equation}
+\item Time Shifting\\
+Given a signal $x(t)$,Time shifting is defined as-
+\begin{equation} y(t)=x(t-t_0) \end{equation}
+\end{enumerate}
+\begin{figure}[h]  
+\centering 
+\begin{tikzpicture}[scale=0.5,
+	declare function={
+    func(\x)= (\x < -2) * (0)   +
+              and(\x >= -2, \x < 2 ) * (2-abs(x))     +
+              (\x >= 2) * (0);
+  }]
+	
+            \begin{axis}[cstyle, title = original]
+                \addplot[smooth,black,thick] {func(x)};
+            \end{axis}
+        \end{tikzpicture}
+\begin{tikzpicture}[scale=0.5,
+	declare function={
+    punc(\x)= (\x < -4) * (0)   +
+              and(\x >= -4, \x < 0 ) * (2*(1-abs(x+2)/2))     +
+              (\x >= 0) * (0);
+  }]
+	
+            \begin{axis}[cstyle,title = left shift]
+                \addplot[smooth,black,thick] {punc(x)};
+            \end{axis}
+        \end{tikzpicture}
+\begin{tikzpicture}[scale=0.5,
+	declare function={
+    junc(\x)= (\x < 0) * (0)   +
+              and(\x >= 0, \x < 4 ) * (2*(1-abs(x-2)/2))     +
+              (\x >= 4) * (0);
+  }]
+	
+            \begin{axis}[cstyle,title=right shift]
+                \addplot[smooth,black,thick] {junc(x)};
+            \end{axis}
+        \end{tikzpicture}
+\caption{Triangular pulse time shifted to left and right by 2 sec respectively} \label{fig:M}  
+\end{figure}
+\section{Signal Analysis}
+\subsection{Analogy Between Vectors and Signals}
+While studying a new topic it is often very helpful to relate it to another topic which we are quite familiar with. Such an analogy can be developed between Vectors and signals.\smallskip\\
+{\bf Vector }\\ A vector may be imagined as an arrow with some length in a vector plane. the length represents magnitude and arrow points to the direction.\\
+let V is a vector with magnitude $V$. Consider two vectors $V_1$ and $V_2$ as shown in the following diagram. Let the component of $V_1$ along with $V_2$ is given by $C_{12}V_2$.\\
+The component of a vector $V_1$ along with the vector $V_2$ can obtained by taking a perpendicular from the end of $V_1$ to the vector $V_2$ as shown in diagram:
+\begin{figure}[h]
+\centering 
+\begin{tikzpicture}[scale=0.7]
+\draw[->,thick](0,0)--node[above]{$V_1$}(3,3);
+\draw[->,thick](0,0)--node[below]{$V_2$} node[above]{$C_{12} V_2$} (4,0);
+\draw[->,dashed](3,3)--(3,0);
+\end{tikzpicture}
+\end{figure}
+
+The vector V1 can be expressed in terms of vector V2
+$$V_1= C_{12}V_2 + V_e$$
+Where $V_e$ is the error vector.\\
+The error signal is minimum for large component value. If $C_{12}$=0, then two signals are said to be orthogonal. 
+Dot Product of Two Vectors 
+$$V_1 . V_2 = V_1.V_2 cos\theta$$
+$\theta$ = Angle between V1 and V2 
+$$V_1 . V_2 =V_2.V_1$$\\
+The components of $V_1$ along $ V_2$ = 
+$$V_1cos \theta = \frac{V_1.V_2}{V_2}$$
+therefore, $$C_{12}=\frac{V_1.V_2}{V_2}$$
+{\bf Signals:}\\
+The concept of orthogonality can be applied to signals. Let us consider two signals $x_1(t)$ and $x_2(t)$. Similar to vectors, you can approximate $x_1(t)$ in terms of $x_2(t)$ as 
+$$x_1(t)= C_{12}x_2(t) + x_e(t)$$
+over the interval $$ t \in [t_1,t_2]$$
+in order to evaluate the error, it is not a good choice to take the integral of the error function $x_e(t)$ over t1 to t2, rather error can be estimated more efficiently by taking the mean square value of that function over t1 to t2.
+\begin{equation}let, \varepsilon = \frac{1}{t_2 - t_1}\int_{-\infty}^{\infty}|x_e(t)|^2dt\end{equation}
+so, $$\varepsilon = \frac{1}{t_2 - t_1}\int_{-\infty}^{\infty}|x_1(t)-C_{12}x_2(t)|^2dt$$
+Where $\varepsilon$ is the mean square value of error signal. The value of C12 which minimizes the error, we need to calculate $$\frac{d}{dC_{12}}\varepsilon=0$$
+$$\Rightarrow {d \over dC_{12} } [ {1 \over t_2 - t_1 } \int_{t_1}^{t_2} [x_1 (t) - C_{12} x_2 (t)]^2 dt]= 0$$
+$$\Rightarrow {1 \over {t_2 - t_1}} \int_{t_1}^{t_2} [  {d \over dC_{12} } x_{1}^2(t) - {d \over dC_{12} } 2x_1(t)C_{12}x_2(t)+ {d \over dC_{12} } x_{2}^{2} (t) C_{12}^2 ] dt =0$$
+Derivative of the terms which do not have C12 term are zero.
+$$\Rightarrow \int_{t_1}^{t_2} - 2x_1(t) x_2(t) dt + 2C_{12}\int_{t_1}^{t_2}[x_{2}^{2} (t)]dt = 0$$
+\begin{equation}Thus,C_{12} = {{\int_{t_1}^{t_2}x_1(t)x_2(t)dt } \over {\int_{t_1}^{t_2} x_{2}^{2} (t)dt }}\end{equation}\\
+if $C_{12}=0$ then the signals are said to be orthogonal\smallskip\\
+{\bf condition for orthogonality}
+\begin{equation} \int_{t_1}^{t_2} x_1 (t)x_2(t) dt = 0\end{equation}
+\subsection{Orthogonal Vector Space}
+A complete set of orthogonal vectors is referred to as orthogonal vector space.\\
+Consider a vector A at a point (X1, Y1, Z1). Consider three unit vectors (VX, VY, VZ) in the direction of X, Y, Z axis respectively.\\
+Since these unit vectors are mutually orthogonal, it satisfies:
+$$V_X. V_Y= V_Y. V_Z= V_Z. V_X = 0$$
+and their magnitude is unity (each).
+hence, they can be written as:
+\[V_a . V_b =  \left\{
+\begin{array}{l l}
+    1 & \quad a = b \\
+    0 & \quad a \neq b
+  \end{array} \right.
+\]
+The vector A can be represented in terms of its components and unit vectors as:
+$$A = X_1 V_X + Y_1 V_Y + Z_1 V_Z$$
+If you consider n dimensional space, then any vector A in that space can be represented as:
+$$A = X_1 V_X + Y_1 V_Y + Z_1 V_Z+...+ N_1V_N$$
+\subsection{Orthogonal Signal Space}
+Let us consider a set of n mutually orthogonal functions x1(t), x2(t)... xn(t) over the interval t1 to t2. As these functions are orthogonal to each other, any two signals xj(t), xk(t) have to satisfy the orthogonality condition. i.e.
+$$\int_{t_1}^{t_2} x_j(t)x_k(t)dt = 0 \,\,\, \text{where}\, j \neq k$$
+Now,
+$$\text{Let} \int_{t_1}^{t_2}x_{k}^{2}(t)dt =\text{some constant}\,\, K_k$$
+Let a function f(t), it can be approximated with this orthogonal signal space by adding the components along mutually orthogonal signals i.e.
+$$f(t) = C_1x_1(t) + C_2x_2(t) + ... + C_nx_n(t) + f_e(t)$$
+$$\text{or}\,\, f(t) = \sum_{r=1}{n}C_rx_r $$
+and thus,
+$$f_e(t) = f(t) - \sum_{r=1}^n C_rx_r (t)$$
+as derived before,
+$$\varepsilon = {1 \over t_2 - t_2 } \int_{t_1}^{t_2} [ f[t] - \sum_{r=1}^{n} C_rx_r(t) ]^2 dt$$
+in order to minimise error along each component, we must evaluate for some parameter k, $${d\varepsilon \over dC_k} = 0$$
+$${d \over dC_k}[ {1 \over t_2 - t_1} \int_{t_1}^{t_2} [ f(t) - \Sigma_{r=1}^n C_rx_r(t)]^2 dt] = 0$$
+All terms that do not contain Ck is zero. i.e. in summation, r=k term remains and all other terms are zero.
+thus,
+\begin{equation} C_k = {{\int_{t_1}^{t_2}f(t)x_k(t)dt} \over {int_{t_1}^{t_2} x_k^2 (t)dt}}\end{equation}
+$$\text{or we can say}\, \Rightarrow \int_{t_1}^{t_2} f(t)x_k(t)dt = C_kK_k$$
+$$\varepsilon = {1 \over t_2 - t_1 } [\int_{t_1}^{t_2} [f^2 (t)] dt + (C_1^2 K_1 + C_2^2 K_2 + ... + C_n^2 K_n)]$$
+\subsection{Closed and Complete Set of Orthogonal Signals}
+Let us consider a set of n mutually orthogonal functions $x_1(t),x_2(t)...x_n(t)$ over the interval$t_1$ to $t_2$. This is called as closed and complete set when there exist {\bf no function} f(t) satisfying the condition:
+$$\int_{t_1}^{t_2} f(t)x_k(t)dt = 0$$
+In such a case f(t) can be approximated by the set of orthogonal signals as:
+$$f(t) = C_1 x_1(t) + C_2 x_2(t) + ... + C_n x_n(t) + f_e(t)$$
+if the series is infinite then it converges to $f(t)$ and thus error becomes zero.
+\subsection{Orthogonality in Complex Functions}
+If $x_1(t)$ and $x_2(t)$ are two complex valued functions, then $x_1(t)$ can be expressed in terms of $x_2(t)$ as :
+$$x_1(t) = C_{12}x_2(t)$$
+where $C_{12} = {{\int_{t_1}^{t_2} f_1(t)f_2^*(t)dt} \over { \int_{t_1}^{t_2} |f_2(t)|^2 dt}}$
+{\bf condition for orthogonality}\\
+$$\Rightarrow  \int_{t_1}^{t_2} f_1 (t) f_2^* (dt) = 0$$
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Next topic}
 \begingroup
 \centering
