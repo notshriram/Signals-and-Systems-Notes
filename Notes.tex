@@ -14,22 +14,14 @@
 
 \usepackage{amsmath,amsfonts,graphicx}
 \usepackage{pgf,tikz}
+\usepackage{subfig}
 \usepackage{mathrsfs}
 \usetikzlibrary{arrows}
 \usepackage{pgfplots}
-\pgfplotsset{
-    standard/.style={%Axis format configuration
-        axis x line=middle,
-        axis y line=middle,
-        enlarge x limits=0.15,
-        enlarge y limits=0.15,
-        every axis x label/.style={at={(current axis.right of origin)},anchor=north west},
-        every axis y label/.style={at={(current axis.above origin)},anchor=north east},
-        every axis plot post/.style={mark options={fill=white}}
-        }
-    }
-%\pgfplotsset{chstyle/.style={xmin=-5,xmax=5,ymin=-2,ymax=2,xlabel=t,ylabel={$x(t)$},axis lines=center}}
-
+\pgfplotsset{dstyle/.style={xmin=-5,xmax=5,ymin=-2,ymax=2,xlabel=$n$,ylabel={$x[n]$},axis lines=center,samples=20,title=Discrete time,every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+every axis y label/.style={at={(current axis.north)},above=2mm}}}
+\pgfplotsset{cstyle/.style={xmin=-5,xmax=5,ymin=-2,ymax=2,xlabel=$t$,ylabel={$x(t)$},axis lines=center,samples=100,title=Continuous time,every axis x label/.style={at={(current axis.right of origin)},anchor=west},
+every axis y label/.style={at={(current axis.north)},above=2mm}}}
 %
 % The following commands set up the lecnum (lecture number)
 % counter and make various numbering schemes work relative
@@ -106,6 +98,20 @@
 \newtheorem{definition}[theorem]{Definition}
 \newenvironment{proof}{{\bf Proof:}}{\hfill\rule{2mm}{2mm}}
 
+\begin{filecontents*}{datafile.dat}
+-5        -0.03
+-4        0.0625
+-3        -0.125
+-2        0.25
+-1        -0.5
+0        0.0
+1        -2
+2        4
+3        -8
+4        16
+5        -32
+
+\end{filecontents*}
 
 \begin{document}
 \title{\Large{\textbf{Signals and Systems}}}
@@ -133,7 +139,7 @@ Signals can be used to describe a wide range of natural phenomena. A signal is g
 \item Image signals 
 \item etc
 \end{itemize}
-\item[System] It is a collection of objects which work together to perform a particular task\\
+\item[System] It is a collection of objects which work together to perform a particular task.\\
 From a communications standpoint, systems are used to process signals.
 \end{description}
 
@@ -210,7 +216,7 @@ There are some standard signals which are used repeatedly in signals and systems
 \end{enumerate}
 
 \subsection*{Unit step signal}
-for continuous time :\\
+{\bf for continuous time :}\\
 	\[ x(t) = \left\{ \begin{array}{ll}
 
 	1 & \mbox{if $t > 0$;} \\
@@ -219,27 +225,9 @@ for continuous time :\\
 
 	\end{array}
 	\right. \]
-at t=0 there is a discontinuity. but generally it can be said that the value converges to 0.5
-\begingroup
-\centering
-
-\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=0.5cm,y=0.5cm]
-\draw[->,color=black] (-5.86,0.) -- (5.5,0.);
-\foreach \x in {-5.,-4.,-3.,-2.,-1.,1.,2.,3.,4.,5.}
-\draw[shift={(\x,0)},color=black] (0pt,2pt) -- (0pt,-2pt) node[below] {\footnotesize $\x$};
-\draw[->,color=black] (0.,-4.22) -- (0.,4.54);
-\foreach \y in {-4.,-3.,-2.,-1.,1.,2.,3.,4.}
-\draw[shift={(0,\y)},color=black] (2pt,0pt) -- (-2pt,0pt) node[left] {\footnotesize $\y$};
-\draw[color=black] (0pt,-10pt) node[right] {\footnotesize $0$};
-\clip(-5.86,-4.22) rectangle (5.5,4.54);
-\draw[smooth,samples=100,domain=-5.86:5.5] plot(\x,{0.5*(\x)/abs(\x)+0.5});
-\begin{scriptsize}
-\draw[color=black] (-5.7,-0.16) node {$f$};
-\end{scriptsize}
-\end{tikzpicture}\\
-\endgroup
+at t=0 there is a discontinuity. but generally it can be said that the value converges to 0.5.\\
 \bigskip
-for discrete time :\\
+{\bf for discrete time :}\\
 	\[ x[n] = \left\{ \begin{array}{ll}
 
 	1 & \mbox{if $n \geq 0$;} \\
@@ -249,26 +237,241 @@ for discrete time :\\
 	\end{array}
 	\right. \]
 
+\begin{figure}[h]  
+\centering 
+\begin{tikzpicture}[scale=0.7]
+            \begin{axis}[cstyle]
+                \addplot[smooth,black,thick] {0.5*(x/abs(x)+1)};
+            \end{axis}
+        \end{tikzpicture}\hspace{6mm}
+\begin{tikzpicture}[scale=0.7]
+            \begin{axis}[dstyle]
+                \addplot+[ycomb,black,thick,mark=o] {0.5*(x/abs(x)+1)};
+            \end{axis}
+        \end{tikzpicture}
+\caption{the unit step signal} \label{fig:M}  
+\end{figure}
+
+\subsection*{ Ramp signal}
+{\bf for continuous time :}\\
+	\[ x(t) = \left\{ \begin{array}{ll}
+
+	t & \mbox{if $t > 0$;} \\
+
+	0 & \mbox{if $t < 0$;} \\
+
+	\end{array}
+	\right. \]
+\bigskip
+{\bf for discrete time :}\\
+	\[ x[n] = \left\{ \begin{array}{ll}
+
+	n & \mbox{if $n \geq 0$;} \\
+
+	0 & \mbox{if $n < 0$;} \\
+
+	\end{array}
+	\right. \]
+
+{\bf note:} The ramp signal can be related to the unit step by the following relation :
+
+\begin{align*}
+\frac{d }{dt}r(t) = u(t)
+\end{align*}
+
+\begin{figure}[h]  
+\centering 
+\begin{tikzpicture}[scale=0.7]
+            \begin{axis}[cstyle]
+                \addplot[smooth,black,thick] {x*(0.5*(x/abs(x)+1))};
+            \end{axis}
+        \end{tikzpicture}\hspace{6mm}
+\begin{tikzpicture}[scale=0.7]
+            \begin{axis}[dstyle]
+                \addplot+[ycomb,black,thick,mark=o] {x*(0.5*(x/abs(x)+1))};
+            \end{axis}
+        \end{tikzpicture}
+\caption{the ramp signal} \label{fig:M}  
+\end{figure}
+
+\subsection*{ Parabolic signal}
+{\bf for continuous time :}\\
+	\[ x(t) = \left\{ \begin{array}{ll}
+
+	\frac{t^2 }{2} & \mbox{if $t > 0$;} \\
+
+	0 & \mbox{if $t < 0$;} \\
+
+	\end{array}
+	\right. \]
+\bigskip
+{\bf for discrete time :}\\
+	\[ x[n] = \left\{ \begin{array}{ll}
+
+	\frac{n^2 }{2} & \mbox{if $n \geq 0$;} \\
+
+	0 & \mbox{if $n < 0$;} \\
+
+	\end{array}
+	\right. \]
+
+{\bf note:} The parabolic signal can be related to the ramp signal by the following relation :
+
+\begin{align*}
+\frac{d }{dt}p(t) = r(t)
+\end{align*}
+
+\begin{figure}[h]  
+\centering 
+\begin{tikzpicture}[scale=0.7]
+            \begin{axis}[cstyle]
+                \addplot[smooth,black,thick] {0.5*x^2*(0.5*(x/abs(x)+1))};
+            \end{axis}
+        \end{tikzpicture}\hspace{6mm}
+\begin{tikzpicture}[scale=0.7]
+            \begin{axis}[dstyle]
+                \addplot+[ycomb,black,thick,mark=o] {0.5*x^2*(0.5*(x/abs(x)+1))};
+            \end{axis}
+        \end{tikzpicture}
+\caption{the parabolic signal} \label{fig:M}  
+\end{figure}
+
+\subsection*{ signum function}
+{\bf for continuous time :}\\
+	\[ x(t) = \left\{ \begin{array}{ll}
+
+	1 & \mbox{if $t > 0$;} \\
+
+	0 & \mbox{if $t = 0$;} \\
+	-1 & \mbox{if $t < 0$;}
+	\end{array}
+	\right. \]
+\bigskip
+{\bf for discrete time :}\\
+	\[ x[n] = \left\{ \begin{array}{ll}
+
+	1 & \mbox{if $t > 0$;} \\
+
+	0 & \mbox{if $t = 0$;} \\
+	-1 & \mbox{if $t < 0$;}
+
+	\end{array}
+	\right. \]
+
+{\bf note:} signum can be related to the unit step signal by the following relation :
+\begin{align*}
+u(t) = \frac{1}{2}(sgn(t)-1)
+\end{align*}
+
+\begin{figure}[h]  
+\centering 
+\begin{tikzpicture}[scale=0.7]
+            \begin{axis}[cstyle]
+                \addplot[smooth,black,thick] {(x/abs(x))};
+            \end{axis}
+        \end{tikzpicture}\hspace{6mm}
+\begin{tikzpicture}[scale=0.7]
+            \begin{axis}[dstyle]
+                \addplot+[ycomb,black,thick,mark=o] {x/abs(x)};
+            \end{axis}
+        \end{tikzpicture}
+\caption{Signum Function} \label{fig:M}  
+\end{figure}
+
+\subsection*{ Real Exponential signal}
+{\bf for continuous time :}\smallskip\\
+	 $x(t) = Ca^t$ \hspace{4mm} for $a>0$\\
+\bigskip\\
+{\bf for discrete time :}\smallskip\\
+	$x[n] = Ca^n$\hspace{4mm} for $a>0$\\
+
+\begin{figure}[h]  
+\centering 
+\begin{tikzpicture}[scale=0.7]
+            \begin{axis}[cstyle,title=growing]
+                \addplot[smooth,black,thick] {2.71828^x};
+            \end{axis}
+        \end{tikzpicture}\hspace{6mm}
+\begin{tikzpicture}[scale=0.7]
+            \begin{axis}[cstyle,title=Decaying]
+                \addplot[smooth,black,thick] {2.71828^(-x)};
+            \end{axis}
+        \end{tikzpicture}
+\caption{real exponential signal} \label{fig:M}  
+\end{figure}
+
+\subsection*{ Complex Exponential signal}
+{\bf for continuous time :}\smallskip\\
+	 $x(t) = Ca^t$ \hspace{4mm} for $a<0$\\
+\bigskip\\
+{\bf for discrete time :}\smallskip\\
+	$x[n] = Ca^n$\hspace{4mm} for $a<0$\\
+
+
+\begin{figure}[h]  
+\centering 
+\begin{tikzpicture}[scale=0.7]
+            \begin{axis}[axis lines = center,title=discrete time]
+                \addplot+[ycomb,black] plot table[y index=1]{datafile.dat};
+            \end{axis}
+        \end{tikzpicture}
+\caption{complex exponential signal} \label{fig:M}  
+\end{figure}
+
+\subsection*{Sinusoidal signals}
+{\bf for continuous time :}\\
+	 $$ x(t) = sin(\omega_0 t+ \theta)$$ \\
+where, $\omega_0 = \frac{2\pi}{T_0}$ is the fundamental frequency and $\theta$ is the phase.\\
+\begin{figure}[h]  
+\centering 
+\begin{tikzpicture}[scale=0.7]
+            \begin{axis}[cstyle]
+                \addplot[smooth,black,thick] {cos(x*180/pi + 30)};
+            \end{axis}
+        \end{tikzpicture}
+\begin{tikzpicture}[scale=0.7,
+	declare function={
+    func(\x)= (\x < -2) * (0)   +
+              and(\x >= -2, \x < 2 ) * (1)     +
+              (\x >= 2) * (0);
+  }]
+	
+            \begin{axis}[cstyle]
+                \addplot[smooth,black,thick] {func(x)};
+            \end{axis}
+        \end{tikzpicture}
+\caption{a sinusoid and rectangular signal} \label{fig:M}  
+\end{figure}
+
+\subsection*{ Rectangular signal a.k.a Gating pulse}
+{\bf for continuous time :}\\
+	\[ x(t) = \left\{ \begin{array}{ll}
+
+	A & \mbox{if $\frac{-T}{2}< t <\frac{T}{2}$;} \\
+
+	0 & \mbox{otherwise} \\
+	\end{array}
+	\right. \]
+\bigskip
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\pagebreak
 \section{Next topic}
 \begingroup
 \centering
 
-Sinc Function\smallskip\\
-\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=0.5cm,y=0.5cm]
-\draw[->,color=black] (-5.86,0.) -- (5.5,0.);
-\foreach \x in {-5.,-4.,-3.,-2.,-1.,1.,2.,3.,4.,5.}
-\draw[shift={(\x,0)},color=black] (0pt,2pt) -- (0pt,-2pt) node[below] {\footnotesize $\x$};
-\draw[->,color=black] (0.,-4.22) -- (0.,4.54);
-\foreach \y in {-4.,-3.,-2.,-1.,1.,2.,3.,4.}
-\draw[shift={(0,\y)},color=black] (2pt,0pt) -- (-2pt,0pt) node[left] {\footnotesize $\y$};
-\draw[color=black] (0pt,-10pt) node[right] {\footnotesize $0$};
-\clip(-5.86,-4.22) rectangle (5.5,4.54);
-\draw[smooth,samples=100,domain=-5.86:5.5] plot(\x,{sin((3.1415926535*(\x))*180/pi)/(3.1415926535*(\x))});
-\begin{scriptsize}
-\draw[color=black] (-5.7,-0.16) node {$f$};
-\end{scriptsize}
-\end{tikzpicture}\\
-\endgroup
 
 Here is how to define things in the proper mathematical style.
 Let $f_k$ be the $AND-OR$ function, defined by
