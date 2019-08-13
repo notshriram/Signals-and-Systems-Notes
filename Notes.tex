@@ -766,7 +766,7 @@ in order to minimise error along each component, we must evaluate for some param
 $${d \over dC_k}[ {1 \over t_2 - t_1} \int_{t_1}^{t_2} [ f(t) - \Sigma_{r=1}^n C_rx_r(t)]^2 dt] = 0$$
 All terms that do not contain Ck is zero. i.e. in summation, r=k term remains and all other terms are zero.
 thus,
-\begin{equation} C_k = {{\int_{t_1}^{t_2}f(t)x_k(t)dt} \over {int_{t_1}^{t_2} x_k^2 (t)dt}}\end{equation}
+\begin{equation} C_k = {{\int_{t_1}^{t_2}f(t)x_k(t)dt} \over {\int_{t_1}^{t_2} x_k^2 (t)dt}}\end{equation}
 $$\text{or we can say}\, \Rightarrow \int_{t_1}^{t_2} f(t)x_k(t)dt = C_kK_k$$
 $$\varepsilon = {1 \over t_2 - t_1 } [\int_{t_1}^{t_2} [f^2 (t)] dt + (C_1^2 K_1 + C_2^2 K_2 + ... + C_n^2 K_n)]$$
 \subsection{Closed and Complete Set of Orthogonal Signals}
@@ -778,9 +778,9 @@ if the series is infinite then it converges to $f(t)$ and thus error becomes zer
 \subsection{Orthogonality in Complex Functions}
 If $x_1(t)$ and $x_2(t)$ are two complex valued functions, then $x_1(t)$ can be expressed in terms of $x_2(t)$ as :
 $$x_1(t) = C_{12}x_2(t)$$
-where $C_{12} = {{\int_{t_1}^{t_2} f_1(t)f_2^*(t)dt} \over { \int_{t_1}^{t_2} |f_2(t)|^2 dt}}$
+where $C_{12} = {{\int_{t_1}^{t_2} x_1(t)x_2^*(t)dt} \over { \int_{t_1}^{t_2} |x_2(t)|^2 dt}}$
 {\bf condition for orthogonality}\\
-$$\Rightarrow  \int_{t_1}^{t_2} f_1 (t) f_2^* (dt) = 0$$
+$$\Rightarrow  \int_{t_1}^{t_2} x_1 (t) x_2^* (dt) = 0$$
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Next topic}
 \begingroup
@@ -806,6 +806,101 @@ Let $f_k$ be the $AND-OR$ function, defined by
 Here is a citation, just for fun~\cite{CW87}.
 \section*{References}
 pass
+\endgroup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Fourier Series}
+%\lecture{**LECTURE-NUMBER**}{**DATE**}{**LECTURER**}{**SCRIBE**}
+\lecture{2}{Fourier Series}{Syed Munavvar Hussain}{Shriram R}
+%\footnotetext{These notes are partially based on those of Nigel Mansell.}
+
+% **** YOUR NOTES GO HERE:
+the Fourier Series is used to represent a continuous time or discrete time periodic signal. It can be use to evaluate the frequency spectrum of those signals as well.
+The Fourier Series is used to analyse only periodic signals.
+
+\section{Trigonometric Fourier Series} 
+Using the Fourier Series, any periodic signal $x(t)$ can be represented as a linear combination of an infinite set of mutually orthogonal functions.When these orthogonal functions are The Trigonometric functions sine and cosine, the fourier series is known as a Trigonometric fourier series.\\
+Mathematically, a periodic signal $x(t)$ with period $T$ can be represented as :
+
+\begin{equation}
+x\left( t \right) = a_0  + \sum\limits_{n = 1}^\infty  {\left( {a_n \cos \left( {n\omega _0 t} \right) + b_n \sin \left( {n\omega _0 t} \right)} \right)} \,\,\,\,\text{where}\,\, \omega_0={2\pi \over T} 
+\end{equation}
+
+{\bf Note : } finding a fourier series of a function involves evaluation of the Coefficients $X_n$ mainly.\\
+\subsection{Evaluation of T.F.S Coefficient}
+
+\begin{equation}
+a_n  = {2 \over T}\int\limits_T {x (t)\cos \left( {n\omega _0 t} \right)dt}\\
+b_n  = {2 \over T}\int\limits_T {x_e (t)\sin \left( {n\omega _0 t} \right)dt}	
+\end{equation}
+
+\subsection{Even and Odd parts of a function}
+Any function can be composed of an even and an odd part. Given a function x(t), we can create even and odd functions \\
+
+\begingroup
+\centering
+\[ 
+x_o \left( t \right) = \frac{1} 
+{2}\left( {x\left( t \right) - x\left( { - t} \right)} \right) \]
+\[
+x_e \left( t \right) = \frac{1}
+{2}\left( {x\left( t \right) + x\left( { - t} \right)} \right) \]
+\endgroup
+
+\subsection{The Exponential Fourier Series}
+A more compact representation of the Fourier Series uses complex exponentials. In this case we end up with the following synthesis and analysis equations:
+\begin{align}{  
+x_T \left( t \right) = \sum\limits_{n =  - \infty }^{ + \infty } {c_n e^{jn\omega _0 t} } \,\,\text{ Synthesis Equation} \\  
+c_n  = {1 \over T}\int\limits_T {x(t)e^{ - jn\omega _0 t} dt} \,\,\text{ Analysis Equation}}\end{align}
+
+\section{Equivalence of the Trigonometric and Exponential Series}
+
+let, \[ x \left( t \right) = a_0  + \sum\limits_{n = 1}^\infty  {\left( {a_n \cos \left( {n\omega _0 t} \right) + b_n \sin \left( {n\omega _0 t} \right)} \right)} \]
+and also, \[ x \left( t \right) = \sum\limits_{n =  - \infty }^{ + \infty } {c_n e^{jn\omega _0 t} } \]
+now, since they are equivalent,
+\[ a_0  + \sum\limits_{n = 1}^\infty  {\left( {a_n \cos \left( {n\omega _0 t} \right) + b_n \sin \left( {n\omega _0 t} \right)} \right)} = \sum\limits_{n =  - \infty }^{ + \infty } {c_n e^{jn\omega _0 t} } \]
+now , let us look at constant terms, by observing, we can say $a_0=c_0$\\
+
+also, in general, we can see that
+\begingroup
+\[
+a_n \cos (n\omega _0 t) + b_n \sin (n\omega _0 t) = c_{ - n} e^{ - jn\omega _0 t}  + c_n e^{ + jn\omega _0 t}
+\]
+\[
+\Rightarrow = (c_{n,r}  - jc_{n,i} )\left( {\cos \left( {n\omega _0 t} \right) - j\sin \left( {n\omega _0 t} \right)} \right) +(c_{n,r}  + jc_{n,i} )\left( {\cos \left( {n\omega _0 t} \right) + j\sin \left( {n\omega _0 t} \right)} \right)
+\]
+\[
+\Rightarrow = 2c_{n,r} \cos \left( {n\omega _0 t} \right) - 2c_{n,i} \sin \left( {n\omega _0 t} \right) +
+j\left( {\cos \left( {n\omega _0 t} \right)\left( {c_{n,r}  - c_{n,r} } \right) + \sin \left( {n\omega _0 t} \right)\left( {c_{n,i}  - c_{n,i} } \right)} \right)
+\]
+\[
+= 2c_{n,r} \cos \left( {n\omega _0 t} \right) - 2c_{n,i} \sin \left( {n\omega _0 t} \right)
+\]
+\endgroup
+Thus, Finally,
+
+\begingroup
+
+\centering
+
+\[
+a_n  = 2c_{n,r} 
+\]
+\[b_n  = -2c_{n,i}
+\]
+\[ \text{and conversely,}c_n=\frac{a_n}2-j\frac{b_n}2, \ n \ne 0, \quad with \ c_{-n}=c_n^*
+\]
+\endgroup
+
+\section{Dirichlet Conditions for Convergence of Fourier Series}
+\begin{enumerate}
+\item $x(t)$ must be absolutely integrable over $R$. i.e;
+\[ \int_{-\infty}^{\infty}x(t) \, < \, \infty \]
+\item $x(t)$ must be single valued over $R$.
+\item $x(t)$ should have a finite number of maxima and minima over the given interval.
+\item $x(t)$ must have a finite number of discontinuities over the given inteval.\bigskip\\
+These 4 conditions make sure that the fourier series expansion converges to the function $x(t)$
+\end{enumerate}
+
 \end{document}
 
 
