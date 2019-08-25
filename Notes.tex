@@ -157,10 +157,12 @@ From a communications standpoint, systems are used to process signals.
 If a signal is defined in terms of only one independent variable, it is called a one dimensional signal otherwise it is called a multi-dimensional signal.\\
 in addition to dimensions,signals can be classified on the basis of various parameters:
 \subsection*{\Large{On the basis of time $t$}}
-\textbf{Continuous Time Signals}\\
-A signal which is defined continuously for all values of time $t$ is called a continuous time signal. It is represented by $x(t)$ (in parentheses) and are also called analog signals.
-
-{\bf Discrete Time Signals}\\ A signal that is defined for only specific instances of time or at discrete values of time.It is represented by $x[n]$ (in brackets).It is generally obtained by sampling an analog signal.\\
+\begin{itemize}
+\item {\bf Discrete time signal:} X-axis (time) is discrete and Y-axis (amplitude) may be continuous or discrete.It is represented by $x[n]$ (in brackets)
+\item {\bf Continuous time signal:} X-axis (time) is continuous and Y-axis (amplitude) may be continuous or discrete.It is represented by $x(t)$ (in parentheses)
+\item {\bf Digital signal:} Y-axis (amplitude) is discrete and X-axis (time) may be continuous or discrete.
+\item {\bf Analog signal:} Y-axis (amplitude) is continuous and X-axis (time) may be continuous or discrete. 
+\end{itemize}
 
 {\bf These signals can be further classified as follows:}
 \subsection*{\Large{On the basis of periodicity}}
@@ -370,7 +372,7 @@ at t=0 there is a discontinuity. but generally it can be said that the value con
 
 {\bf note:} signum can be related to the unit step signal by the following relation :
 \begin{align*}
-u(t) = \frac{1}{2}(sgn(t)-1)
+u(t) = \frac{1}{2}(sgn(t)+1)
 \end{align*}
 
 \begin{figure}[h]  
@@ -426,7 +428,7 @@ u(t) = \frac{1}{2}(sgn(t)-1)
             \end{axis}
         \end{tikzpicture}\hspace{4mm}
 \begin{tikzpicture}[scale=0.7]
-            \begin{axis}[xlabel=$t$,ylabel=$Re(x(t)$,zlabel=$Im(x(t))$, y label style={rotate = 35},title=continuous time]
+            \begin{axis}[xlabel=$t$,ylabel=$Re(x(t)$,zlabel=$Im(x(t))$, y label style={rotate = 39},title=continuous time]
                \addplot3[
             y domain=0:0,
             orange,samples=100,
@@ -464,8 +466,9 @@ where, $\omega_0 = \frac{2\pi}{T_0}$ is the fundamental frequency and $\theta$ i
 \end{figure}
 
 \subsection*{ Rectangular signal a.k.a Gating pulse}
+It is denoted by $rect(t/T)$ where T is the period or $\Pi(t)$.\\
 {\bf for continuous time :}\\
-	\[ x(t) = \left\{ \begin{array}{ll}
+	\[ \Pi(t) = \left\{ \begin{array}{ll}
 
 	A & \mbox{if $\frac{-T}{2}< t <\frac{T}{2}$;} \\
 
@@ -476,7 +479,7 @@ where, $\omega_0 = \frac{2\pi}{T_0}$ is the fundamental frequency and $\theta$ i
 
 \subsection*{Triangular pulse}
 {\bf for continuous time :}\\
-	\[ x(t) = \left\{ \begin{array}{ll}
+	\[ Tri(t) = \left\{ \begin{array}{ll}
 
 	\frac{A}{T}t+A & \mbox{if $ T \leq t \leq 0$;} \\
 
@@ -584,11 +587,11 @@ In discrete time, it is called the Kronecker delta or 'Unit impulse'.
 \item the unit impulse is the first difference of the unit step sequence.
 $$\delta[n]=u[n]-u[n-1]$$
 \item alternatively:
-$$u[n]=\sum_{n=-\infty}^{+\infty}\delta[n]$$
+$$u[n]=\sum_{k=-\infty}^{n}\delta[k]$$
 \item the dirac delta is the first derivative of the unit step signal.
 $$\delta(t)=\frac{d}{dt}u(t)$$
 \item alternatively:
-$$u(t)=\int_{-\infty}^{+\infty}\delta(t)$$
+$$u(t)=\int_{-\infty}^{t}\delta(\tau) d\tau$$
 \end{itemize}
 {\bf Properties of impulse signal:}\\
 \begin{itemize}
@@ -596,7 +599,7 @@ $$u(t)=\int_{-\infty}^{+\infty}\delta(t)$$
 $$\int_{-\infty}^{\infty}\delta (t)dt = 1$$
 \item Sifting\\
 $$\int_{a}^{b}x(t)\delta(t-T)dt=\begin{cases}
-x(T) for a<T<b;\\
+x(T) \,\,for\,\, a<T<b;\\
 0\hspace{4mm} otherwise;\\
 \end{cases} $$
 thus it can be imagined that the impulse function $\delta(t-T)$ sifts through the function f(t) and pulls out the value f(T).\\
